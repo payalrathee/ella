@@ -1,0 +1,103 @@
+
+:root {
+    --primary-color: #FC2779;
+    --secondary-color: #EDDED3;
+    --hover-color: black;
+}
+
+.text-primary {
+    color: var(--primary-color);
+}
+
+.text-secondary {
+    color: var(--secondary-color);
+}
+
+.text-hover {
+    color: var(--hover-color);
+}
+
+.bg-primary {
+    background-color: var(--primary-color);
+}
+
+.bg-secondary {
+    background-color: var(--secondary-color);
+}
+
+body * {
+    color: var(--primary-color);
+}
+
+.ell-btn {
+    background-color: var(--primary-color);
+    padding: 3px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+}
+
+.ell-name {
+    cursor: pointer;
+    text-align: center;
+    font-size: 30px;
+    color: black;
+}
+
+/* ---------- Home page ---------- */
+
+/* Carousel */
+.slick-slider .slick-arrow {
+    z-index: 9999;
+    box-shadow: 0 0 3px var(--primary-color);
+    background-color: var(--secondary-color);
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.ell-home-carousel img {
+    height: 70vh;
+    width: 100%;
+    object-fit: cover;
+}
+
+.ell-home-carousel .slick-arrow {
+    display: none !important;
+}
+
+/* ---------- Product page ---------- */
+
+.product-card:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+/* ---------- Footer ---------- */
+
+.ell-footer button {
+    color: var(--secondary-color);
+}
+
+/* ---------- Single product page ---------- */
+
+/* Carousel */
+.ell-product-carousel .slick-list img{
+    object-fit: cover;
+    height: 500px;
+}
+
+.ell-product-carousel .slick-dots li {
+    height: 100px;
+    width: 100px;
+}
+
+.ell-product-carousel .slick-dots img {
+    height: 100%;
+    width: 100%;
+}
+
+.ell-product-carousel .slick-dots {
+    bottom: unset;
+    margin-top: 30px;
+}
