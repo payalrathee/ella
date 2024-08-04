@@ -2,13 +2,11 @@ package com.estore.ella.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "media")
-@Getter @Setter @NoArgsConstructor
 public class Media {
 
     @Id
@@ -25,8 +23,8 @@ public class Media {
     @Column(name = "size")
     private double size;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product")
     private Product product;
 }

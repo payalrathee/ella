@@ -1,4 +1,4 @@
-package com.estore.ella.repositories;
+package com.estore.ella.dao;
 
 import com.estore.ella.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;

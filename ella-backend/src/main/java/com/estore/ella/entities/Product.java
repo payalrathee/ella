@@ -1,45 +1,56 @@
 package com.estore.ella.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.*;
+import lombok.Data;
+import org.hibernate.validator.constraints.Range;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Data
 @Entity
 @Table(name = "product")
-@Getter @Setter @NoArgsConstructor
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
+    @NotNull
     @NotBlank(message = "Title can't be empty")
+    @Size(min = 1, max = 100, message = "Title must be between 1 and 100 characters")
+    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Title must be alphanumeric")
     @Column(name = "title", nullable = false)
     private String title;
 
-    @NotBlank(message = "Description can't be empty")
-    @Column(name = "description", nullable = false)
+    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Description must be alphanumeric")
+    @Column(name = "description")
     private String desc;
 
-    @NotBlank(message = "Price can't be empty")
+    @DecimalMin(value = "0.0", message = "Please enter a valid price")
     @Column(name = "price", nullable = false)
-    private double price;
+    private Double price;
 
+    @DecimalMin(value = "0.0", message = "Please enter a valid price")
     @Column(name = "discounted_price")
-    private double discountedPrice;
+    private Double discountedPrice;
 
-    @NotBlank(message = "Quantity can't be empty")
+    @Range(min = 0, max = 1000, message = "Please enter a valid quantity")
     @Column(name = "quantity", nullable = false)
-    private int quantity;
+    private Integer quantity;
 
+    @Size(min = 1, max = 50, message = "Brand must be between 1 and 50 characters")
+    @Pattern(regexp = "^[a-zA-Z0-9 ]+$", message = "Brand must be alphanumeric")
     @Column(name = "brand")
     private String brand;
+
+    @Size(min = 1, max = 30, message = "Color must be between 1 and 30 characters")
+    @Pattern(regexp = "^[a-zA-Z0-9 ]+$", message = "Color must be alphanumeric")
+    @Column(name = "color")
+    private String color;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Review> reviews;
@@ -50,6 +61,7 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Media> media;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category")
     private Category category;

@@ -4,15 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import lombok.Data;
 import java.util.Date;
 
+@Data
 @Entity
 @Table(name="payment_card")
-@Getter @Setter @NoArgsConstructor
 public class PaymentCard {
 
     @Id
@@ -38,9 +35,9 @@ public class PaymentCard {
     @Column(name = "cvv")
     private int cvv;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user")
-    @JsonIgnore
     private User user;
 
 }

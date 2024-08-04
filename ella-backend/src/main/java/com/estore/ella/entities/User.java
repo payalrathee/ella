@@ -1,9 +1,8 @@
 package com.estore.ella.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.*;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,14 +10,9 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.Pattern;
-
+@Data
 @Entity
 @Table(name="user")
-@Getter @Setter @NoArgsConstructor
 public class User implements UserDetails{
 
     @Id
@@ -26,31 +20,36 @@ public class User implements UserDetails{
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
 
+    @NotNull
     @NotBlank(message = "Username can't be empty")
+    @Size(min = 3, max = 20, message = "Username must be between 3 and 20 characters")
+    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Username must be alphanumeric")
     @Column(name="username", nullable=false, unique=true)
     private String username;
 
-    @NotBlank(message = "Password can't be empty")
-    @Size(min = 8, message = "Password must be atleast 8 characters long.")
-    @Column(name="password", nullable=false)
-    private String password;
-
-    @Column(name="fname")
-    private String fname;
-
-    @Column(name="lname")
-    private String lname;
-
-    @Email
+    @NotNull
+    @Email(message = "Invalid email")
     @NotBlank(message = "Email can't be empty")
     @Column(name="email", nullable=false, unique=true)
     private String email;
 
+    @NotNull
+    @NotBlank(message = "Password can't be empty")
+    private String password;
+
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "First name must contain only alphabetic characters")
+    @Column(name="fname")
+    private String fname;
+
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "Last name must contain only alphabetic characters")
+    @Column(name="lname")
+    private String lname;
+
     @Pattern(regexp="(^$|[0-9]{10})", message = "Invalid phone number")
-    @Column(name="phone", unique=true, length=12)
+    @Column(name="phone", length=12)
     private String phone;
 
-    @Column(name="profile_image", columnDefinition="varchar(1000) default 'https://t4.ftcdn.net/jpg/05/89/93/27/360_F_589932782_vQAEAZhHnq1QCGu5ikwrYaQD0Mmurm0N.jpg'")
+    @Column(name="profile_image")
     private String profileImg;
 
     @Column(name="user_role", nullable=false)
@@ -67,6 +66,9 @@ public class User implements UserDetails{
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Rating> ratings;
+
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<Order> orders;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;

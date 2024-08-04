@@ -2,9 +2,13 @@ package com.estore.ella.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
+@Data
+@Entity
+@Table(name = "review")
 public class Review {
 
     @Id
@@ -18,13 +22,13 @@ public class Review {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product")
     private Product product;
 }

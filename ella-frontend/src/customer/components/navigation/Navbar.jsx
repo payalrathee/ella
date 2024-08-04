@@ -18,6 +18,9 @@ import {
 import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { navigation } from './navigationData';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {openPopup} from '../../../state/actions/popupActions';
+import { logoutUser } from '../../../state/actions/UserActions';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -26,6 +29,23 @@ function classNames(...classes) {
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {user, popup} = useSelector((state) => {
+    return {
+      user: state.user,
+      popup: state.popup.open
+    }
+  })
+
+  const openLoginPopup = () => {
+    dispatch(openPopup())
+    navigate("/login")
+  }
+
+  const openSignupPopup = () => {
+    dispatch(openPopup())
+    navigate("/signup")
+  }
 
   return (
     <div className="bg-white z-10 relative">
@@ -138,18 +158,22 @@ export default function Navbar() {
                   ))}
                 </div>
 
-                <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-                  <div className="flow-root">
-                    <a href="#" className="-m-2 block p-2 font-medium text-primary">
-                      Sign in
-                    </a>
+                {(!user.isLoggedIn && 
+                  <>
+                    <div className="space-y-6 border-t border-gray-200 px-4 py-6">
+                    <div className="flow-root">
+                      <a href="javascript:void(0)" onClick={openLoginPopup} className="-m-2 block p-2 font-medium text-primary">
+                        Sign in
+                      </a>
+                    </div>
+                    <div className="flow-root">
+                      <a href="javascript:void(0)" onClick={openSignupPopup} className="-m-2 block p-2 font-medium text-primary">
+                        Create account
+                      </a>
+                    </div>
                   </div>
-                  <div className="flow-root">
-                    <a href="#" className="-m-2 block p-2 font-medium text-primary">
-                      Create account
-                    </a>
-                  </div>
-                </div>
+                  </>
+                )}
               </DialogPanel>
             </TransitionChild>
           </div>
@@ -271,15 +295,19 @@ export default function Navbar() {
               </PopoverGroup>
 
               <div className="ml-auto flex items-center">
-                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <a href="#" className="text-sm font-medium hover:text-hover">
-                    Sign in
-                  </a>
-                  <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                  <a href="#" className="text-sm font-medium hover:text-hover">
-                    Create account
-                  </a>
-                </div>
+                {(!user.isLoggedIn) && 
+                  <>
+                    <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                      <a href="javascript:void(0)" onClick={openLoginPopup} className="text-sm font-medium hover:text-hover">
+                        Sign in
+                      </a>
+                      <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
+                      <a href="javascript:void(0)" onClick={openSignupPopup} className="text-sm font-medium hover:text-hover">
+                        Create account
+                      </a>
+                  </div>
+                  </>
+                }
 
                 {/* Search */}
                 <div className="flex lg:ml-6">
@@ -302,9 +330,18 @@ export default function Navbar() {
                 </div>
 
                 {/* profile */}
-                <a onClick={() => {navigate("/account/order")}}>
-                  <img className="ml-5 cursor-pointer w-[40px] h-[40px] rounded-full" src="/images/women-feature-img2.jpeg"></img>
-                </a>
+                {
+                  (user.isLoggedIn && 
+                    <>
+                      <a onClick={() => {navigate("/account/order")}}>
+                        <img className="ml-5 cursor-pointer w-[40px] h-[40px] rounded-full" src="/images/women-feature-img2.jpeg"></img>
+                      </a>
+                      <a onClick={() => {dispatch(logoutUser())}}>
+                        Logout
+                      </a>
+                    </>
+                  )
+                }
               </div>
             </div>
           </div>

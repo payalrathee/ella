@@ -48,7 +48,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             }
 
         } catch (Exception e) {
-            logger.error("Cannot set user authorization");
+            LOGGER.error("Cannot set user authorization: {}", e.getMessage());
         }
 
         filterChain.doFilter(request, response);

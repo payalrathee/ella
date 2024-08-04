@@ -1,15 +1,14 @@
 package com.estore.ella.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "address")
-@Getter @Setter @NoArgsConstructor
 public class Address {
 
     @Id
@@ -46,6 +45,8 @@ public class Address {
     @Column(name = "zip", nullable = false)
     private int zip;
 
-    @Column(name = "user")
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user")
     private User user;
 }

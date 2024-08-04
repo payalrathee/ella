@@ -3,15 +3,14 @@ package com.estore.ella.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.List;
 
+
+@Data
 @Entity
 @Table(name = "category")
-@Getter @Setter @NoArgsConstructor
 public class Category {
 
     @Id
@@ -26,12 +25,12 @@ public class Category {
     @Column(name = "level")
     private int level;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_category")
     private Category parentCategory;
 
-    @OneToMany(mappedBy = "parent_category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Category> subCategories;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

@@ -44,6 +44,21 @@ body * {
     color: black;
 }
 
+.ell-hidden {
+    display: none;
+}
+
+.ell-error, .ell-field-error {
+    color: red;
+    font-size: 13px;
+    margin-top: 3px;
+}
+
+.ell-error {
+    text-align: center;
+    margin-top: 10px;
+}
+
 /* ---------- Home page ---------- */
 
 /* Carousel */
