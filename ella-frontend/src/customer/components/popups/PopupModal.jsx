@@ -7,7 +7,7 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import LoginPopup from './LoginPopup';
 import SignupPopup from './SignupPopup';
 import { useDispatch, useSelector } from 'react-redux';
-import { closePopup } from '../../../state/actions/popupActions';
+import { closePopup } from '../../../state/utility/utilityActions';
 
 const style = {
   position: 'absolute',

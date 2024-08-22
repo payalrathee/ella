@@ -10,7 +10,6 @@ public class UserDto {
     @NotNull
     @NotBlank(message = "Username can't be empty")
     @Size(min = 3, max = 20, message = "Username must be between 3 and 20 characters")
-    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Username must be alphanumeric")
     private String username;
 
     @NotNull
@@ -28,10 +27,7 @@ public class UserDto {
     @Pattern(regexp="(^$|[0-9]{10})", message = "Invalid phone number")
     private String phone;
 
-    @Pattern(regexp = "^[a-zA-Z]+$", message = "First name must contain only alphabetic characters")
     private String fname;
-
-    @Pattern(regexp = "^[a-zA-Z]+$", message = "Last name must contain only alphabetic characters")
     private String lname;
 
 }

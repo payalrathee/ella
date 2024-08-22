@@ -20,11 +20,10 @@ const Home = () => {
             <video autoPlay muted loop className="mx-auto w-11/12" style={{height:'550px'}}>
                 <source src={video} type="video/mp4"></source>
             </video>
-            <Carousel />
-            <Carousel />
-            <Carousel />
+            <Carousel data="Latest"/>
+            <Carousel data="Top Deals"/>
+            <Carousel data="Trending"/>
             
-     
         </div>
     );
 };

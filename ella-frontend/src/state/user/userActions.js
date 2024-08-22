@@ -1,7 +1,7 @@
 import axios from "axios";
-import { LOGOUT_USER, SET_USER } from "./actionTypes";
-import { closePopup, resetFieldErrors, setFieldErrors } from "./popupActions";
-import { resetError, setError } from "./errorActions";
+import { LOGOUT_USER, SET_USER } from "../user/userActionTypes";
+import { closePopup, resetFieldErrors, setFieldErrors, resetError, setError } from "../utility/utilityActions";
+import axiosInstance from "../../axiosInstance";
 
 export function setUser(user) {
 
@@ -12,6 +12,16 @@ export function setUser(user) {
 
 }
 
+export function logoutUser() {
+
+    localStorage.removeItem("token");
+    return {
+        type: LOGOUT_USER,
+        payload: {}
+    }
+
+}
+
 export function signupUser(user) {
     return async(dispatch) => {
         dispatch(resetError());
@@ -19,6 +29,7 @@ export function signupUser(user) {
         try {
 
             const response = await axios.post("http://localhost:8080/user/register", user);
+            localStorage.setItem('token', response.data.token);
             dispatch(setUser(response.data.user));
             dispatch(closePopup());
         } catch(error) {
@@ -39,6 +50,7 @@ export function loginUser(user) {
         try {
 
             const response = await axios.post("http://localhost:8080/login", user);
+            localStorage.setItem('token', response.data.token);
             dispatch(setUser(response.data.user));
             dispatch(closePopup());
 
@@ -53,11 +65,16 @@ export function loginUser(user) {
     }
 }
 
-export function logoutUser() {
+export function init() {
+    return async(dispatch) => {
+       
+        try {
 
-    return {
-        type: LOGOUT_USER,
-        payload: {}
+            const response = await axiosInstance.get("/api/v1/");
+            dispatch(setUser(response.data.user));
+
+        } catch (error) {
+            console.log("Error: ", error)
+        }
     }
-
 }

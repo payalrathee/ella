@@ -19,8 +19,8 @@ import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@her
 import { navigation } from './navigationData';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {openPopup} from '../../../state/actions/popupActions';
-import { logoutUser } from '../../../state/actions/UserActions';
+import {openPopup, resetError} from '../../../state/utility/utilityActions';
+import { logoutUser } from '../../../state/user/userActions';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -38,11 +38,13 @@ export default function Navbar() {
   })
 
   const openLoginPopup = () => {
+    dispatch(resetError())
     dispatch(openPopup())
     navigate("/login")
   }
 
   const openSignupPopup = () => {
+    dispatch(resetError())
     dispatch(openPopup())
     navigate("/signup")
   }

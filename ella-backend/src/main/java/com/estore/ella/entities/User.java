@@ -37,11 +37,9 @@ public class User implements UserDetails{
     @NotBlank(message = "Password can't be empty")
     private String password;
 
-    @Pattern(regexp = "^[a-zA-Z]+$", message = "First name must contain only alphabetic characters")
     @Column(name="fname")
     private String fname;
 
-    @Pattern(regexp = "^[a-zA-Z]+$", message = "Last name must contain only alphabetic characters")
     @Column(name="lname")
     private String lname;
 

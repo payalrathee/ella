@@ -7,23 +7,22 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 @Data
 public class FiltersDto {
 
-    @Size(min = 1, max = 50, message = "Brand must be between 1 and 50 characters")
-    @Pattern(regexp = "^[a-zA-Z0-9 ]+$", message = "Brand must be alphanumeric")
-    private String brand;
+    private List<String> brands;
 
-    @Size(min = 1, max = 50, message = "Category must be between 1 and 50 characters")
-    @Pattern(regexp = "^[a-zA-Z0-9 ]+$", message = "Category must be alphanumeric")
-    private String category;
+    private List<String> category;
 
-    @Pattern(regexp = "^(in_stock|out_of_stock)$", message = "Stock must be either in_stock or out_of_stock")
+    @Pattern(regexp = "^(in_stock|out_of_stock)?$", message = "Stock must be either in_stock or out_of_stock")
     private String stock;
 
-    @Pattern(regexp = "^(name_desc|name_asc|price_desc|price_asc)$", message = "Sort must be price_asc, price_desc, name_asc or name_desc")
+    @Pattern(regexp = "^(name_desc|name_asc|price_desc|price_asc|date_asc|date_desc|discount_asc|discount_desc)?$", message = "Sort must be price_asc, price_desc, name_asc or name_desc")
     private String sort;
 
     @DecimalMin(value = "0.0", message = "Please enter a valid price")
@@ -32,7 +31,10 @@ public class FiltersDto {
     @DecimalMin(value = "0.0", message = "Please enter a valid price")
     private Double maxPrice;
 
-    @DecimalMin(value = "0.0", message = "Please enter a valid price")
-    private Double minDiscountedPrice;
+    @DecimalMin(value = "0.0", message = "Please enter a valid discount")
+    private Double minDiscount;
+
+    @Range(min = 0)
+    private Integer count;
 
 }

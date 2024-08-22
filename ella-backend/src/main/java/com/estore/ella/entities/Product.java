@@ -22,11 +22,9 @@ public class Product {
     @NotNull
     @NotBlank(message = "Title can't be empty")
     @Size(min = 1, max = 100, message = "Title must be between 1 and 100 characters")
-    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Title must be alphanumeric")
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Description must be alphanumeric")
     @Column(name = "description")
     private String desc;
 
@@ -38,17 +36,19 @@ public class Product {
     @Column(name = "discounted_price")
     private Double discountedPrice;
 
+    @DecimalMin(value = "0.0", message = "Please enter a valid discount")
+    @Column(name = "discount")
+    private Double discount;
+
     @Range(min = 0, max = 1000, message = "Please enter a valid quantity")
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
     @Size(min = 1, max = 50, message = "Brand must be between 1 and 50 characters")
-    @Pattern(regexp = "^[a-zA-Z0-9 ]+$", message = "Brand must be alphanumeric")
     @Column(name = "brand")
     private String brand;
 
     @Size(min = 1, max = 30, message = "Color must be between 1 and 30 characters")
-    @Pattern(regexp = "^[a-zA-Z0-9 ]+$", message = "Color must be alphanumeric")
     @Column(name = "color")
     private String color;
 

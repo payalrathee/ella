@@ -1,4 +1,4 @@
-import { CLOSE_POPUP, OPEN_POPUP, RESET_FIELD_ERRORS, SET_FIELD_ERRORS } from "./actionTypes"
+import { CLOSE_POPUP, OPEN_POPUP, RESET_FIELD_ERRORS, SET_FIELD_ERRORS, RESET_ERROR, SET_ERROR } from "./utilityActionTypes"
 
 export function openPopup () {
     return {
@@ -23,6 +23,20 @@ export function setFieldErrors(errors) {
 export function resetFieldErrors() {
     return {
         type: RESET_FIELD_ERRORS,
+        payload: {}
+    }
+}
+
+export function setError(error) {
+    return {
+        type: SET_ERROR,
+        payload: error
+    }
+}
+
+export function resetError() {
+    return {
+        type: RESET_ERROR,
         payload: {}
     }
 }

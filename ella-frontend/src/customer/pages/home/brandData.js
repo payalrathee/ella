@@ -6,22 +6,27 @@ import image5 from "../../../assets/images/dior.png";
 
 export const brandData = [
     {
+        id: 'lakme',
         name: 'Lakme',
         image: image1
     },
     {
+        id: 'maybelline',
         name: 'Maybelline',
         image: image2
     },
     {
+        id: 'loreal',
         name: 'Loreal',
         image: image3
     },
     {
+        id: 'kay',
         name: 'Kay',
         image: image4
     },
     {
+        id: 'dior',
         name: 'Dior',
         image: image5
     }

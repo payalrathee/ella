@@ -20,6 +20,8 @@ public class CustomExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Error> handleValidationException(MethodArgumentNotValidException e) {
+        System.out.println(e);
+
         Map<String, String> errors = new HashMap<>();
         e.getBindingResult().getAllErrors().forEach(error -> {
             String key = ((FieldError)error).getField();
@@ -36,6 +38,8 @@ public class CustomExceptionHandler {
     @ExceptionHandler(AuthException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseEntity<Map<String, String>> handleAuthException(AuthException ex) {
+        System.out.println(ex);
+
         Map<String, String> response = new HashMap<>();
         response.put("error", "Authentication error");
         response.put("message", ex.getMessage());
@@ -45,6 +49,8 @@ public class CustomExceptionHandler {
     @ExceptionHandler(UsernameNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<Map<String, String>> handleUserException(UsernameNotFoundException ex) {
+        System.out.println(ex);
+
         Map<String, String> response = new HashMap<>();
         response.put("error", "User not found");
         response.put("message", ex.getMessage());
@@ -54,6 +60,8 @@ public class CustomExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<Map<String, String>> handleGenericException(Exception ex) {
+        System.out.println(ex);
+
         Map<String, String> response = new HashMap<>();
         response.put("error", "Internal server error");
         response.put("message", ex.getMessage());

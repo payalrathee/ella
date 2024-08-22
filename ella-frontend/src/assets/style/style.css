@@ -113,6 +113,7 @@ body * {
 }
 
 .ell-product-carousel .slick-dots {
+    position: relative;
     bottom: unset;
     margin-top: 30px;
 }

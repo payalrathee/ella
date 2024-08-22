@@ -16,6 +16,6 @@ public interface ProductService {
     public Product addProduct(Product product, List<String> categories) throws ProductException, CategoryException;
     public Product updateProduct(Product product, List<String> categories) throws CategoryException;
     public Product deleteProduct(Product product);
-    public Page<Product> filterProducts(FiltersDto filters, int pageNumber, int pageSize);
+    public Page<Product> filterProducts(FiltersDto filters, int pageNumber);
     public ProductDto formatProduct(Product product);
 }

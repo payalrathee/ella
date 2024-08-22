@@ -72,6 +72,11 @@ public class ProductServiceImpl implements ProductService{
 
         product.setCreatedAt(LocalDateTime.now());
 
+        // Discount
+        double discount = ((product.getPrice() - product.getDiscountedPrice())/product.getPrice())/100;
+        discount = Math.ceil(Math.max(discount, 0));
+        product.setDiscount(discount);
+
         product = productRepository.save(product);
 
         return product;
@@ -101,6 +106,11 @@ public class ProductServiceImpl implements ProductService{
 
         product.setCategory(prevLevelCategory);
 
+        // Discount
+        double discount = ((product.getPrice() - product.getDiscountedPrice())/product.getPrice())*100;
+        discount = Math.ceil(Math.max(discount, 0));
+        product.setDiscount(discount);
+
         return productRepository.save(product);
 
     }
@@ -113,8 +123,9 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Page<Product> filterProducts(FiltersDto filters, int pageNumber, int pageSize) {
+    public Page<Product> filterProducts(FiltersDto filters, int pageNumber) {
 
+        int pageSize = filters.getCount() != null ? filters.getCount() : 100;
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         ProductSpecification spec = new ProductSpecification(filters);
 

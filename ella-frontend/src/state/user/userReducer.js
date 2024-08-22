@@ -1,4 +1,4 @@
-import { LOGOUT_USER, SET_USER } from "../actions/actionTypes"
+import { LOGOUT_USER, SET_USER } from "../user/userActionTypes"
 
 const initState = {
     userDetails: {},

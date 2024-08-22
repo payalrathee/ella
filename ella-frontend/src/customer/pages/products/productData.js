@@ -1,9 +1,6 @@
 export const sortOptions = [
-    { name: 'Most Popular', href: '#', current: false },
-    { name: 'Best Rating', href: '#', current: false },
-    { name: 'Newest', href: '#', current: false },
-    { name: 'Price: Low to High', href: '#', current: false },
-    { name: 'Price: High to Low', href: '#', current: false },
+    { name: 'Price: Low to High', value: 'price_asc', current: true },
+    { name: 'Price: High to Low', value:'price_desc', current: false },
 ]
 
 export const subCategories = [
@@ -14,9 +11,9 @@ export const subCategories = [
     { name: 'Fragrance', href: '#' },
 ]
 
-export const filters = [
+export const productFilters = [
     {
-        id: 'brand',
+        id: 'brands',
         name: 'Brand',
         options: [
             { value: 'lakme', label: 'Lakme', checked: false },
@@ -38,6 +35,10 @@ export const filters = [
             { value: 'kajal', label: 'Kajal', checked: false },
         ],
     },
+
+]
+
+export const singleFIlter = [
     {
         id: 'price',
         name: 'Price',
@@ -51,19 +52,25 @@ export const filters = [
         ],
     },
 
-]
-
-export const singleFIlter = [{
-    id: 'discount',
-    name: 'Discounts',
-    options: [
-        { value: '10', label: '10% and above', checked: false },
-        { value: '20', label: '20% and above', checked: false },
-        { value: '30', label: '30% and above', checked: false },
-        { value: '40', label: '40% and above', checked: false },
-        { value: '50', label: '50% and above', checked: false },
-        { value: '60', label: '60% and above', checked: false },
-        { value: '70', label: '70% and above', checked: false },
-    ],
-},
+    {
+        id: 'minDiscount',
+        name: 'Discounts',
+        options: [
+            { value: '10', label: '10% and above', checked: false },
+            { value: '20', label: '20% and above', checked: false },
+            { value: '30', label: '30% and above', checked: false },
+            { value: '40', label: '40% and above', checked: false },
+            { value: '50', label: '50% and above', checked: false },
+            { value: '60', label: '60% and above', checked: false },
+            { value: '70', label: '70% and above', checked: false },
+        ],
+    },
+    {
+        id: 'stock',
+        name: 'Stock',
+        options: [
+            { value: 'in_stock', label: 'In stock', checked: false },
+            { value: 'out_of_stock', label: 'Out of stcok', checked: false },
+        ],
+    },
 ]

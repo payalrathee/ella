@@ -46,7 +46,7 @@ public class ProductController {
         return new ResponseEntity(productService.formatProduct(product), HttpStatus.OK);
     }
 
-    @PostMapping("/add")
+    @PostMapping("/")
     public ResponseEntity<ProductDto> addProduct(@Validated(CreateProductGroup.class) @RequestBody ProductDto productDto) throws CategoryException, ProductException {
 
         LOGGER.info("Request recieved for add product");
@@ -60,7 +60,7 @@ public class ProductController {
 
     }
 
-    @PatchMapping("/update")
+    @PatchMapping("/")
     public ResponseEntity<ProductDto> updateProduct(@Validated(UpdateProductGroup.class) @RequestBody ProductDto productDto) throws ProductException, CategoryException {
 
         LOGGER.info("Request recieved for update product");
@@ -72,7 +72,7 @@ public class ProductController {
         return new ResponseEntity(productService.formatProduct(product), HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<ProductDto> deleteProduct(@PathVariable Integer id) throws ProductException {
 
         LOGGER.info("Request received for delete product");
@@ -81,24 +81,6 @@ public class ProductController {
         product = productService.deleteProduct(product);
 
         return new ResponseEntity(productService.formatProduct(product), HttpStatus.OK);
-    }
-
-    @PostMapping("/filter/{page_no}")
-    public ResponseEntity<List<ProductDto>> filterProducts(@Valid @RequestBody FiltersDto filters, @PathVariable("page_no") Integer pageNumber) {
-
-        LOGGER.info("Request received to filter products");
-
-        int pageSize = 10;
-        Page<Product> productPage = productService.filterProducts(filters, pageNumber, pageSize);
-        List<Product> products = productPage.getContent();
-
-        List<ProductDto> productList = new ArrayList<>();
-        for(Product product : products) {
-            productList.add(productService.formatProduct(product));
-        }
-        System.out.println(products.size());
-
-        return new ResponseEntity<>(productList, HttpStatus.OK);
     }
 
 }

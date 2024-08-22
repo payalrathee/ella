@@ -2,8 +2,7 @@ import { Grid, TextField } from '@mui/material'
 import axios from 'axios'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { closePopup } from '../../../state/actions/popupActions'
-import { signupUser } from '../../../state/actions/UserActions'
+import { signupUser } from '../../../state/user/userActions'
 
 const SignupPopup = () => {
 

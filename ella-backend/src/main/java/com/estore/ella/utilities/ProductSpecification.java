@@ -22,11 +22,15 @@ public class ProductSpecification implements Specification<Product> {
 
         final List<Predicate> predicates = new ArrayList<>();
 
-        if(criteria.getBrand() != null) {
-            predicates.add(criteriaBuilder.like(root.get("brand"), "%" + criteria.getBrand() + "%"));
+        if (criteria.getBrands() != null && !criteria.getBrands().isEmpty()) {
+            CriteriaBuilder.In<String> inClause = criteriaBuilder.in(root.get("brand"));
+            for (String brand : criteria.getBrands()) {
+                inClause.value(brand);
+            }
+            predicates.add(inClause);
         }
 
-        if(criteria.getStock() != null ) {
+        if(criteria.getStock() != null && !criteria.getStock().isBlank()) {
             if(criteria.getStock().equals("in_stock")) {
                 predicates.add(criteriaBuilder.greaterThan(root.get("quantity"), 0));
             } else if(criteria.getStock().equals("out_of_stock")) {
@@ -34,29 +38,29 @@ public class ProductSpecification implements Specification<Product> {
             }
         }
 
-        if(criteria.getMinPrice() != null) {
+        if(criteria.getMinPrice() != null && criteria.getMinPrice() != 0) {
             predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"), criteria.getMinPrice()));
         }
 
-        if(criteria.getMaxPrice() != null) {
+        if(criteria.getMaxPrice() != null && criteria.getMaxPrice() != 0) {
             predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), criteria.getMaxPrice()));
         }
 
-        if(criteria.getMinDiscountedPrice() != null) {
-            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("discountedPrice"), criteria.getMinDiscountedPrice()));
+        if(criteria.getMinDiscount() != null && criteria.getMinDiscount() != 0) {
+            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("discount"), criteria.getMinDiscount()));
         }
 
         // Apply category predicates with OR between them
-        if (criteria.getCategory() != null) {
-            Predicate categoryPredicate = criteriaBuilder.or(
-                    criteriaBuilder.equal(root.get("category").get("name"), criteria.getCategory()),
-                    criteriaBuilder.equal(root.get("category").get("parentCategory").get("name"), criteria.getCategory()),
-                    criteriaBuilder.equal(root.get("category").get("parentCategory").get("parentCategory").get("name"), criteria.getCategory())
-            );
-            predicates.add(categoryPredicate);
-        }
+//        if (criteria.getCategory() != null && !criteria.getCategory().isEmpty()) {
+//            Predicate categoryPredicate = criteriaBuilder.or(
+//                    criteriaBuilder.equal(root.get("category").get("name"), criteria.getCategory()),
+//                    criteriaBuilder.equal(root.get("category").get("parentCategory").get("name"), criteria.getCategory()),
+//                    criteriaBuilder.equal(root.get("category").get("parentCategory").get("parentCategory").get("name"), criteria.getCategory())
+//            );
+//            predicates.add(categoryPredicate);
+//        }
 
-        if (criteria.getSort() != null) {
+        if (criteria.getSort() != null && !criteria.getSort().isBlank()) {
             List<Order> orders = new ArrayList<>();
             if (criteria.getSort().equals("price_asc")) {
                 orders.add(criteriaBuilder.asc(root.get("price")));
@@ -66,6 +70,14 @@ public class ProductSpecification implements Specification<Product> {
                 orders.add(criteriaBuilder.asc(root.get("title")));
             } else if (criteria.getSort().equals("name_desc")) {
                 orders.add(criteriaBuilder.desc(root.get("title")));
+            } else if (criteria.getSort().equals("date_asc")) {
+                orders.add(criteriaBuilder.asc(root.get("createdAt")));
+            } else if (criteria.getSort().equals("date_desc")) {
+                orders.add(criteriaBuilder.desc(root.get("createdAt")));
+            } else if (criteria.getSort().equals("discount_asc")) {
+                orders.add(criteriaBuilder.asc(root.get("discount")));
+            } else if (criteria.getSort().equals("discount_desc")) {
+                orders.add(criteriaBuilder.desc(root.get("discount")));
             }
             query.orderBy(orders);
         }
